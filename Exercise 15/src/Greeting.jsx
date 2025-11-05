@@ -4,8 +4,8 @@ import LanguageContext from "./LanguageContext";
 const Greeting = () => {
   const language = useContext(LanguageContext);
   const greats = {
-    en: "Hello!",
-    es: "Hola!",
+    en: "Hello",
+    es: "Hola",
   };
   return <h2>{greats[language]}</h2>;
 };
