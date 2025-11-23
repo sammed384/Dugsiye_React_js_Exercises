@@ -5,6 +5,7 @@ import { signOut } from "../lib/auth";
 
 const Header = () => {
   const { user, isLoggedIn } = useAuth();
+  console.log("Header user state:", user);
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -41,12 +42,6 @@ const Header = () => {
               >
                 Home
               </Link>
-              <Link
-                to="/about"
-                className="border-transparent text-gray-500 hover:border-orange-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                About
-              </Link>
 
               {isLoggedIn && (
                 <>
@@ -81,7 +76,7 @@ const Header = () => {
               <div className="ml-3 relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-orange-500 items-center gap-2"
+                  className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orange-500 items-center gap-2"
                 >
                   <span className="text-gray-700 font-medium">
                     {user?.user_metadata?.username ||
@@ -89,17 +84,24 @@ const Header = () => {
                       "User"}
                   </span>
 
-                  <div className="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">
-                    {user?.user_metadata?.username?.[0]?.toUpperCase() ||
+                  <div className="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold overflow-hidden">
+                    {user?.user_metadata?.avatar_url ? (
+                      <img
+                        src={user.user_metadata.avatar_url}
+                        alt="Profile"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      user?.user_metadata?.username?.[0]?.toUpperCase() ||
                       user?.email?.[0]?.toUpperCase() ||
-                      "U"}
+                      "U"
+                    )}
                   </div>
                 </button>
 
-             
                 {isProfileOpen && (
                   <div
-                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-100"
+                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
                   >
                     <Link
                       to="/dashboard"
@@ -195,9 +197,17 @@ const Header = () => {
             {isLoggedIn ? (
               <>
                 <div className="flex items-center px-4">
-                  <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-lg">
-                    {user?.user_metadata?.username?.[0]?.toUpperCase() ||
-                      user?.email?.[0]?.toUpperCase()}
+                  <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-lg overflow-hidden">
+                    {user?.user_metadata?.avatar_url ? (
+                      <img
+                        src={user.user_metadata.avatar_url}
+                        alt="Profile"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      user?.user_metadata?.username?.[0]?.toUpperCase() ||
+                      user?.email?.[0]?.toUpperCase()
+                    )}
                   </div>
 
                   <div className="ml-3">
