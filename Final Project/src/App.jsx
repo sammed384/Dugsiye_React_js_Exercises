@@ -12,6 +12,7 @@ import SignUpPage from "./pages/SignUpPage";
 import { Route, Routes } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import Tasks from "./pages/Tasks";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -24,14 +25,9 @@ function App() {
           <Routes>
             {/* public routes */}
             <Route path="/" element={<Home />} />
-             <Route path="/profile" element={<Profile />} />
-             <Route path="/dashboard" element={<Dashboard />} />
-             <Route path="/about/" element={<About />} />
-            <Route path="/manage-tasks/" element={<Tasks />} />
-
-
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/about" element={<About />} />*
             {/* unauthenticated routes (redirect to home if logged in) */}
-
             <Route
               path="/signin"
               element={
@@ -40,13 +36,37 @@ function App() {
                 </UnAuthenticatedRoute>
               }
             />
-
             <Route
               path="/signup"
               element={
                 <UnAuthenticatedRoute>
                   <SignUpPage />
                 </UnAuthenticatedRoute>
+              }
+            />
+            {/* protected route */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tasks"
+              element={
+                <ProtectedRoute>
+                  <Tasks />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
               }
             />
           </Routes>

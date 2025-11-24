@@ -18,6 +18,13 @@ export function appReducer(state, action) {
         ...state,
         tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
+      case "UPDATE_TASK":
+        return {
+          ...state,
+          tasks: state.tasks.map((t) =>
+            t.id === action.payload.id ? action.payload : t
+          ),
+        };
     case "SET_LOADING":
       return { ...state, loading: action.payload };
     case "SET_ERROR":
